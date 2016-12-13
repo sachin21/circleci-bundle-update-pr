@@ -25,6 +25,8 @@ module Circleci
 
         def self.need?(git_branches)
           return false unless git_branches.include?(ENV['CIRCLE_BRANCH'])
+          system("git reset Gemfile")
+          system("git checkout Gemfile")
           unless system("bundle update && bundle update --ruby")
             raise "Unable to execute `bundle update && bundle update --ruby`"
           end
